@@ -54,15 +54,20 @@ function setPointerX(clientX) {
   const r = gw.getBoundingClientRect();
   mx = clientX - r.left;
 }
+function isUiTouch(e) {
+  return e.target.closest('button, #overlay');
+}
 gw.addEventListener('mousemove', e => {
   setPointerX(e.clientX);
 });
 gw.addEventListener('mouseleave', () => { mx = -999; });
 gw.addEventListener('touchstart', e => {
+  if (gs !== 'play' || isUiTouch(e)) return;
   setPointerX(e.touches[0].clientX);
   e.preventDefault();
 }, {passive:false});
 gw.addEventListener('touchmove', e => {
+  if (gs !== 'play' || isUiTouch(e)) return;
   setPointerX(e.touches[0].clientX);
   e.preventDefault();
 }, {passive:false});
